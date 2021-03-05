@@ -10,6 +10,7 @@ var correccionX = 0;
 var correccionY = 0;
 var superIndex = 0;
 var pintarLinea = false;
+var enPizarron = false;
 
 // Colores
 var colores = [
@@ -172,6 +173,14 @@ cuadros.forEach((cuadro)=>{
     })
 })
 
+function puntero(e){
+    enPizarron = !enPizarron;
+    if(enPizarron)
+        document.documentElement.style.cursor = "crosshair";
+    else
+    document.documentElement.style.cursor = "default";
+}
+
 // Eventos de input
 txt_tam.addEventListener('input', cambiarTam);
 txt_tam_bor.addEventListener('input', cambiarBor)
@@ -180,6 +189,8 @@ txt_tam_bor.addEventListener('input', cambiarBor)
 miCanvas.addEventListener('mousedown', empezarDibujo, false);
 miCanvas.addEventListener('mousemove', dibujarLinea, false);
 miCanvas.addEventListener('mouseup', pararDibujar, false);
+miCanvas.addEventListener('mouseover', puntero, false);
+miCanvas.addEventListener('mouseout', puntero, false);
 
 // Eventos pantallas táctiles
 miCanvas.addEventListener('touchstart', empezarDibujo, false);
