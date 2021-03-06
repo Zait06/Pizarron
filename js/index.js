@@ -37,6 +37,7 @@ var nuevaPosicionX = 0;
 var nuevaPosicionY = 0;
 
 var posicion = miCanvas.getBoundingClientRect()
+console.log(posicion);
 correccionX = posicion.x;
 correccionY = posicion.y;
 
@@ -89,10 +90,9 @@ function insertarElementoCanvas(e){
         switch (tipo_elemento) {
             case 1:
                 insertarTexto(e);
-                break;
-        
+            break;
             default:
-                break;
+            break;
         }
     }
     bool_insertar = false;
@@ -118,7 +118,7 @@ function dibujarLinea(event) {
         } else {
             // Versión touch, pantalla tactil
             nuevaPosicionX = event.changedTouches[0].pageX - correccionX;
-            nuevaPosicionY = event.changedTouches[0].pageY - correccionY;
+            nuevaPosicionY = event.changedTouches[0].pageY - correccionY - 100;
         }
         // Guarda la linea
         guardarLinea();
