@@ -77,7 +77,7 @@ function insertarTexto(e) {
     } else {
         // Versión touch, pantalla tactil
         nuevaPosicionX = e.changedTouches[0].pageX - correccionX;
-        nuevaPosicionY = e.changedTouches[0].pageY - correccionY;
+        nuevaPosicionY = e.changedTouches[0].pageY - correccionY - 100;
     }
     ctx.fillText(elemento_insertar,nuevaPosicionX,nuevaPosicionY);
 }
@@ -228,7 +228,7 @@ function modalTexto(){
                 <option value="courier">Courier</option>
             </select>
             <span class="input-group-text">Color</span>
-            <input type="color" class="form-control form-control-color" id="color_text" value="#000" title="Elige el color del texto">
+            <input type="color" class="form-control form-control-color" id="color_text" value="#000000" title="Elige el color del texto">
         </div>
         <br>
         <div class="input-group">
@@ -279,7 +279,6 @@ function insertarElemento(){
             bool_insertar = false;
         break;
     }
-    b
 }
 
 // Carga de la página
