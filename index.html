@@ -12,12 +12,15 @@
     <div class="container">
         <h1>Pizarrón</h1>
         <ul class="nav nav-tabs" id="myTab" role="tablist">
-        <li class="nav-item" role="presentation">
-            <button class="nav-link active" id="color-tab" data-bs-toggle="tab" data-bs-target="#color" type="button" role="tab" aria-controls="color" aria-selected="true">Color</button>
-        </li>
-        <li class="nav-item" role="presentation">
-            <button class="nav-link" id="tamanio-tab" data-bs-toggle="tab" data-bs-target="#tamanio" type="button" role="tab" aria-controls="tamanio" aria-selected="false">Tamaño</button>
-        </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="color-tab" data-bs-toggle="tab" data-bs-target="#color" type="button" role="tab" aria-controls="color" aria-selected="true">Color</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="tamanio-tab" data-bs-toggle="tab" data-bs-target="#tamanio" type="button" role="tab" aria-controls="tamanio" aria-selected="false">Tamaño</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="insertar-tab" data-bs-toggle="tab" data-bs-target="#insertar" type="button" role="tab" aria-controls="insertar" aria-selected="false">Insertar</button>
+            </li>
         </ul>
         <div class="tab-content" id="myTabContent">
             <div class="tab-pane fade show active" id="color" role="tabpanel" aria-labelledby="color-tab">
@@ -48,11 +51,37 @@
                         id="txt_tam_bor">
                 </div>
             </div>
+            <div class="tab-pane fade" id="insertar" role="tabpanel" aria-labelledby="insertar-tab">
+                <br>
+                <button type="button" 
+                    class="btn btn-secondary"
+                    id="open_modal_text" 
+                    data-bs-toggle="modal" 
+                    data-bs-target="#my-modal">
+                        <b>A</b> Texto
+                </button>
+            </div>
         </div>
         <br>
         Configuración actual:
         <div id="config_actual"></div>
         <button type="button" class="btn btn-danger" id="borrar">Borrar pizarrón</button>
+    </div>
+
+    <div class="modal fade" id="my-modal" tabindex="-1" aria-labelledby="my-modal-title" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="my-modal-title"></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="modal-body"></div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-success" id="insertar_elem" data-bs-dismiss="modal">Insertar</button>
+                </div>
+            </div>
+        </div>
     </div>
 
     <br><br>

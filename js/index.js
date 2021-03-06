@@ -3,7 +3,9 @@ var btn_borrar = document.querySelector('#borrar');
 var txt_tam = document.querySelector("#txt_tam");
 var txt_tam_bor = document.querySelector("#txt_tam_bor");
 var div_colores = document.querySelector("#colores");
-var cuadros = document.getElementsByName("cuadro")
+var cuadros = document.getElementsByName("cuadro");
+var open_modal_text = document.getElementById("open_modal_text");
+var insertar = document.getElementById("insertar_elem");
 
 var lineas = [];    // Memoria 
 var correccionX = 0;
@@ -11,6 +13,10 @@ var correccionY = 0;
 var superIndex = 0;
 var pintarLinea = false;
 var enPizarron = false;
+var bool_insertar = false;
+var elemento_insertar = null;
+var tipo_elemento = 0;
+var config_elemento = {};
 
 // Colores
 var colores = [
@@ -42,8 +48,10 @@ miCanvas.height = window.innerHeight;
  * Funcion que empieza a dibujar la linea
  */
 function empezarDibujo() {
-    pintarLinea = true;
-    lineas.push([]);
+    if(!bool_insertar){
+        pintarLinea = true;
+        lineas.push([]);
+    }
 };
 
 /**
@@ -56,8 +64,42 @@ function guardarLinea() {
     });
 }
 
+function insertarTexto(e) {
+    let ctx = miCanvas.getContext('2d');
+    ctx.font = `${config_elemento.estilo} ${config_elemento.tam}px ${config_elemento.familia}`;
+    ctx.fillStyle = `${config_elemento.color}`;
+    // Marca el nuevo punto
+    if (e.changedTouches == undefined) {
+        // Versión ratón
+        nuevaPosicionX = e.layerX;
+        nuevaPosicionY = e.layerY;
+    } else {
+        // Versión touch, pantalla tactil
+        nuevaPosicionX = e.changedTouches[0].pageX - correccionX;
+        nuevaPosicionY = e.changedTouches[0].pageY - correccionY;
+    }
+    ctx.fillText(elemento_insertar,nuevaPosicionX,nuevaPosicionY);
+}
+
 /**
- * Funcion dibuja la linea
+ * Inserta un elemento al area de trabajo
+ */
+function insertarElementoCanvas(e){
+    if(bool_insertar){
+        switch (tipo_elemento) {
+            case 1:
+                insertarTexto(e);
+                break;
+        
+            default:
+                break;
+        }
+    }
+    bool_insertar = false;
+}
+
+/**
+ * Funcion que dibuja lineas
  */
 function dibujarLinea(event) {
     event.preventDefault();
@@ -156,23 +198,6 @@ function cargar(){
     configuraciones();
 }
 
-// Carga de la página
-window.onload = cargar();
-
-// Eventos de colores
-btn_borrar.addEventListener('click', borrarPizarron);
-
-cuadros.forEach((cuadro)=>{
-    cuadro.addEventListener('click', (e)=>{
-        e.preventDefault();
-        // console.log(cuadro.value);
-        grosor = cuadro.value == colores.length-1 ? txt_tam_bor.value : txt_tam.value;
-        superIndex = cuadro.value;
-        lineas = [];
-        configuraciones();
-    })
-})
-
 function puntero(e){
     enPizarron = !enPizarron;
     if(enPizarron)
@@ -180,6 +205,99 @@ function puntero(e){
     else
     document.documentElement.style.cursor = "default";
 }
+
+function modalTexto(){
+    let cuerpo = `<div class="input-group">
+            <span class="input-group-text">Estilo</span>
+            <select id="estilo" class="form-select form-select-sm" aria-label="estilo">
+                <option selected>Estilo de letra</option>
+                <option value="">Normal</option>
+                <option value="bold"><b>Negritas</b></option>
+                <option value="italic"><i>Italica</i></option>
+            </select>
+            <span class="input-group-text">Tamaño</span>
+            <input type="number" class="form-control" id="text_size" value="20">
+            <span class="input-group-text">px</span>
+        </div>
+        <div class="input-group">
+            <span class="input-group-text">Familia</span>
+            <select id="familia" class="form-select form-select-sm" aria-label="familia">
+                <option selected>Familia de la letra</option>
+                <option value="sans-serif">Sans-Serif</option>
+                <option value="times">Times</option>
+                <option value="courier">Courier</option>
+            </select>
+            <span class="input-group-text">Color</span>
+            <input type="color" class="form-control form-control-color" id="color_text" value="#000" title="Elige el color del texto">
+        </div>
+        <br>
+        <div class="input-group">
+            <span class="input-group-text">Texto</span>
+            <input type="text" class="form-control" id="text_insertar">
+        </div>`;
+    cuerpo += `<p>Una vez dado click en insertar, diríjace al espacio de trabajo y click donde se insertará el texto</p>`;
+    return cuerpo;
+}
+
+/**
+ * Insertar texto en canvas
+ */
+function abrirModal(tipo){
+    tipo_elemento = tipo;
+    var contenido;
+    switch (tipo) {
+        case 1:
+            document.getElementById("my-modal-title").innerHTML = `Ingrese el texto a insertar`
+            contenido = modalTexto();
+        break;
+    
+        default:
+            document.getElementById("my-modal-title").innerHTML = `Puede haber un error`;
+            contenido = `...`
+        break;
+    }
+    document.getElementById("modal-body").innerHTML = contenido;
+}
+
+/**
+ * Inserta un elemento
+ */
+function insertarElemento(){
+    config_elemento = {};
+    switch (tipo_elemento) {
+        case 1:
+            elemento_insertar = document.getElementById("text_insertar").value
+            config_elemento = {
+                estilo: document.getElementById("estilo").value,
+                tam: document.getElementById("text_size").value,
+                familia: document.getElementById("familia").value,
+                color: document.getElementById("color_text").value
+            }
+            bool_insertar = true;
+        break;
+        default:
+            bool_insertar = false;
+        break;
+    }
+    b
+}
+
+// Carga de la página
+window.onload = cargar();
+
+// Eventos de botones
+btn_borrar.addEventListener('click', borrarPizarron);
+cuadros.forEach((cuadro)=>{
+    cuadro.addEventListener('click', (e)=>{
+        e.preventDefault();
+        grosor = cuadro.value == colores.length-1 ? txt_tam_bor.value : txt_tam.value;
+        superIndex = cuadro.value;
+        lineas = [];
+        configuraciones();
+    })
+});
+open_modal_text.addEventListener('click', () => {abrirModal(1);});
+insertar.addEventListener('click', insertarElemento)
 
 // Eventos de input
 txt_tam.addEventListener('input', cambiarTam);
@@ -191,6 +309,7 @@ miCanvas.addEventListener('mousemove', dibujarLinea, false);
 miCanvas.addEventListener('mouseup', pararDibujar, false);
 miCanvas.addEventListener('mouseover', puntero, false);
 miCanvas.addEventListener('mouseout', puntero, false);
+miCanvas.addEventListener('click', insertarElementoCanvas);
 
 // Eventos pantallas táctiles
 miCanvas.addEventListener('touchstart', empezarDibujo, false);
