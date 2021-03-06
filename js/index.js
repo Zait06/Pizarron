@@ -37,7 +37,6 @@ var nuevaPosicionX = 0;
 var nuevaPosicionY = 0;
 
 var posicion = miCanvas.getBoundingClientRect()
-console.log(posicion);
 correccionX = posicion.x;
 correccionY = posicion.y;
 
