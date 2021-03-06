@@ -313,3 +313,4 @@ miCanvas.addEventListener('click', insertarElementoCanvas);
 // Eventos pantallas táctiles
 miCanvas.addEventListener('touchstart', empezarDibujo, false);
 miCanvas.addEventListener('touchmove', dibujarLinea, false);
+miCanvas.addEventListener('touchend', pararDibujar, false)
