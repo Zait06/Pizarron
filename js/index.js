@@ -79,6 +79,7 @@ function insertarTexto(e) {
         nuevaPosicionY = e.changedTouches[0].pageY - correccionY - 10;
     }
     ctx.fillText(elemento_insertar,nuevaPosicionX,nuevaPosicionY);
+    guardarLinea();
 }
 
 /**
