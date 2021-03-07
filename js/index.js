@@ -50,8 +50,8 @@ miCanvas.height = window.innerHeight;
 function empezarDibujo() {
     if(!bool_insertar){
         pintarLinea = true;
-        lineas.push([]);
     }
+    lineas.push([]);
 };
 
 /**
@@ -76,7 +76,7 @@ function insertarTexto(e) {
     } else {
         // Versión touch, pantalla tactil
         nuevaPosicionX = e.changedTouches[0].pageX - correccionX;
-        nuevaPosicionY = e.changedTouches[0].pageY - correccionY - 100;
+        nuevaPosicionY = e.changedTouches[0].pageY - correccionY - 10;
     }
     ctx.fillText(elemento_insertar,nuevaPosicionX,nuevaPosicionY);
 }
@@ -117,7 +117,7 @@ function dibujarLinea(event) {
         } else {
             // Versión touch, pantalla tactil
             nuevaPosicionX = event.changedTouches[0].pageX - correccionX;
-            nuevaPosicionY = event.changedTouches[0].pageY - correccionY - 100;
+            nuevaPosicionY = event.changedTouches[0].pageY - correccionY - 10;
         }
         // Guarda la linea
         guardarLinea();
@@ -139,7 +139,8 @@ function dibujarLinea(event) {
  */
 function pararDibujar () {
     pintarLinea = false;
-    guardarLinea();
+    if(!bool_insertar)
+        guardarLinea();
 }
 
 /**
@@ -177,7 +178,11 @@ function cambiarBor(){
 function selecColores(){
     let divColor = ``;
     colores.forEach((color,index)=>{
-        divColor += `<button class="cuadro" style="background-color: ${color};" name="cuadro" value=${index}></button>&nbsp;`;
+        let mas = ``;
+        if(index == 0){
+            mas = `box-shadow: 0 0 0.2em 0.2em #2979ff;`
+        }
+        divColor += `<button class="cuadro" style="background-color: ${color};${mas}" name="cuadro" value=${index}></button>&nbsp;&nbsp;`;
     });
     document.getElementById("colores").innerHTML = divColor;
 }
@@ -283,11 +288,18 @@ function insertarElemento(){
 // Carga de la página
 window.onload = cargar();
 
+var cuadroAntes = cuadros[0];
 // Eventos de botones
 btn_borrar.addEventListener('click', borrarPizarron);
+
 cuadros.forEach((cuadro)=>{
     cuadro.addEventListener('click', (e)=>{
         e.preventDefault();
+        if(cuadroAntes != null){
+            cuadroAntes.style.boxShadow = "none";
+        }
+        cuadro.style.boxShadow = "0 0 0.2em 0.2em #2979ff"
+        cuadroAntes = cuadro;
         grosor = cuadro.value == colores.length-1 ? txt_tam_bor.value : txt_tam.value;
         superIndex = cuadro.value;
         lineas = [];
