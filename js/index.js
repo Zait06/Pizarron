@@ -209,7 +209,7 @@ function modalTexto(){
     let cuerpo = `<div class="input-group">
             <span class="input-group-text">Estilo</span>
             <select id="estilo" class="form-select form-select-sm" aria-label="estilo">
-                <option selected>Estilo de letra</option>
+                <option value="" selected>Estilo de letra</option>
                 <option value="">Normal</option>
                 <option value="bold"><b>Negritas</b></option>
                 <option value="italic"><i>Italica</i></option>
@@ -221,7 +221,7 @@ function modalTexto(){
         <div class="input-group">
             <span class="input-group-text">Familia</span>
             <select id="familia" class="form-select form-select-sm" aria-label="familia">
-                <option selected>Familia de la letra</option>
+                <option value="sans-serif" selected>Familia de la letra</option>
                 <option value="sans-serif">Sans-Serif</option>
                 <option value="times">Times</option>
                 <option value="courier">Courier</option>
@@ -232,9 +232,9 @@ function modalTexto(){
         <br>
         <div class="input-group">
             <span class="input-group-text">Texto</span>
-            <input type="text" class="form-control" id="text_insertar">
+            <input type="text" class="form-control" id="text_insertar" required>
         </div>`;
-    cuerpo += `<p>Una vez dado click en insertar, diríjace al espacio de trabajo y click donde se insertará el texto</p>`;
+    cuerpo += `<p>Una vez dado click en insertar, diríjace al espacio de trabajo y de click donde se insertará el texto</p>`;
     return cuerpo;
 }
 

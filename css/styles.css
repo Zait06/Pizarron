@@ -1,3 +1,7 @@
+html{
+    scroll-behavior: smooth;
+}
+
 canvas{
     width: 100%;
     height: 100%;
@@ -26,3 +30,18 @@ span.cuadro{
     border-width: 0.1em;
 }
 
+div .btn_config{
+    position: sticky;
+    bottom: 0;
+    float: right;
+    margin-right: 1em;
+    margin-bottom: 0.5em;
+    display: none;
+}
+
+/* Media queries */
+@media screen and (max-width: 480px){
+    div .btn_config{
+        display: block;
+    }
+}
