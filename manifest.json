@@ -1,0 +1,20 @@
+{
+    "name": "Pizarron con canvas",
+    "short_name": "Pizarron",
+    "start_url": ".",
+    "background_color": "#2979ff",
+    "theme_color": "#009578",
+    "display": "standalone",
+    "icons": [
+        {
+            "src": "assets/logo.png",
+            "sizes" : "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "assets/logo512.png",
+            "sizes" : "512x512",
+            "type": "image/png"
+        }
+    ]
+}
